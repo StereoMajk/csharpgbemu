@@ -54,7 +54,7 @@
   <ItemGroup>
     <Reference Include="SdlDotNet, Version=6.1.0.0, Culture=neutral, PublicKeyToken=26ad4f7e10c61408, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>sdldotnet-6.1.1beta\bin\SdlDotNet.dll</HintPath>
+      <HintPath>SdlDotNet.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -65,7 +65,7 @@
     <Reference Include="System.Xml" />
     <Reference Include="Tao.Sdl, Version=1.2.13.0, Culture=neutral, PublicKeyToken=9c7a200e36c0094e, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>sdldotnet-6.1.1beta\bin\Tao.Sdl.dll</HintPath>
+      <HintPath>Tao.Sdl.dll</HintPath>
     </Reference>
     <Reference Include="XPTable, Version=1.6.1.15, Culture=neutral, PublicKeyToken=24950705800d2198, processorArchitecture=MSIL">
       <HintPath>..\packages\XPTable.1.6.1.15\lib\net20\XPTable.dll</HintPath>
