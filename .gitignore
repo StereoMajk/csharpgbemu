@@ -328,3 +328,7 @@ ASALocalRun/
 
 # MFractors (Xamarin productivity tool) working folder 
 .mfractor/
+/testroms/testRom2.gb
+/testroms/testRom1.gb
+/testroms/cpu_test.gbc
+/testroms/cpu_instrs.gb
