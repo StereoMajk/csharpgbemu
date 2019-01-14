@@ -2668,11 +2668,19 @@ namespace C_SharpGBEmu
             {
                 int sign_bit = (buffer[idx] & 0x80);
                 byte jump_byte=0;
-                if (sign_bit==1)
-                    jump_byte = (byte)(256 - (int)buffer[idx]);
+                if (sign_bit != 0)
+                {
+                    jump_byte = (byte)(256 - (int)(buffer[idx] & 0x7f));
+                    int destination_pc = idx + jump_byte + 1;
+                    line.OPCode = line.OPCode.Replace("@", "-" + jump_byte.ToString("X4")) +" (" + destination_pc.ToString("X4") + "h)";
+                }
                 else
-                    jump_byte = buffer[idx];
-                line.OPCode=line.OPCode.Replace("@", jump_byte.ToString("X"));
+                {
+                    jump_byte = (byte)(buffer[idx] & 0x7f);
+                    int destination_pc = idx + jump_byte + 1;
+                    line.OPCode = line.OPCode.Replace("@", "+" + jump_byte.ToString("X4")) + " (" + destination_pc.ToString("X4") + "h)";
+                }
+                
                 line.OPCodeBytes[1] = buffer[idx];
                 line.nr_bytes++;
                 
