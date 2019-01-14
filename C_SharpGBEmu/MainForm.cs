@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Text;
@@ -59,29 +60,107 @@ namespace C_SharpGBEmu
             m_screenthread.Priority = ThreadPriority.Normal;
             m_screenthread.Start();
 
-            SdlDotNet.Core.Events.Tick += new EventHandler<SdlDotNet.Core.TickEventArgs>(Screen_Events_Tick);
-            SdlDotNet.Core.Events.Tick += new EventHandler<SdlDotNet.Core.TickEventArgs>(Tilemap_Events_Tick);
-            SdlDotNet.Core.Events.KeyboardDown += new EventHandler<SdlDotNet.Input.KeyboardEventArgs>(this.OnKeyboardDown);
-            SdlDotNet.Core.Events.KeyboardUp += new EventHandler<SdlDotNet.Input.KeyboardEventArgs>(this.OnKeyboardUp);
-
+            SdlDotNet.Core.Events.Tick += Screen_Events_Tick;
+            SdlDotNet.Core.Events.Tick += Tilemap_Events_Tick;
+            SdlDotNet.Core.Events.KeyboardDown += OnKeyboardDown;
+            SdlDotNet.Core.Events.KeyboardUp += OnKeyboardUp;
             m_ticktimer = new System.Timers.Timer();
             m_ticktimer.Elapsed += new System.Timers.ElapsedEventHandler(TickTimer_Tick);
             m_ticktimer.Interval = 160;
             m_ticktimer.Enabled = false;
         }
 
+        private void MainForm_KeyDown(object sender, KeyEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void Events_MouseMotion(object sender, SdlDotNet.Input.MouseMotionEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
         private void TickTimer_Tick(object sender, ElapsedEventArgs e)
         {
-            if (!m_currentemulationstate.IsPaused)
+            for (int i = 0; i < 70224; i++)
             {
-                for (int i = 0; i < 70224; i++)
+                foreach (BreakPoint bp in m_currentemulationstate.Breakpoints)
                 {
-                    m_gameboy.Run(1);
+                    if (!bp.enabled)
+                        continue;
+                    if (bp.adress == m_gameboy.cpu.PC)
+                    {
+                        m_currentemulationstate.IsPaused = true;
+                        m_ticktimer.Enabled = false;
+                        ShowAndUpdateDisassembly();
+                        break;
+                    }
+                }
+                if (m_currentemulationstate.RunToCursorBreakpoint != -1)
+                {
+                    Debug.WriteLine(m_gameboy.cpu.BC.w.ToString("X4"));
+                    if (m_currentemulationstate.RunToCursorBreakpoint == m_gameboy.cpu.PC)
+                    {
+                        m_currentemulationstate.RunToCursorBreakpoint = -1;
+                        m_currentemulationstate.IsPaused = true;
+                        m_ticktimer.Enabled = false;
+                        ShowAndUpdateDisassembly();
+                        break;
+                    }
+                }
+                if (!m_currentemulationstate.IsPaused)
+                {
+                    try
+                    {
+                        m_gameboy.Run(1);
+                    }
+                    catch (Gameboy.InvalidWriteAccessException ie)
+                    {
+                        m_currentemulationstate.RunToCursorBreakpoint = -1;
+                        m_currentemulationstate.IsPaused = true;
+                        m_ticktimer.Enabled = false;
+                        ShowAndUpdateDisassembly();
+                        break;
+                    }
+                    catch (Gameboy.InvalidReadAccessException ie)
+                    {
+                        m_currentemulationstate.RunToCursorBreakpoint = -1;
+                        m_currentemulationstate.IsPaused = true;
+                        m_ticktimer.Enabled = false;
+                        ShowAndUpdateDisassembly();
+                        break;
+                    }
+                    catch (Z80Cpu.InvalidOpCodeException ie)
+                    {
+                        m_currentemulationstate.RunToCursorBreakpoint = -1;
+                        m_currentemulationstate.IsPaused = true;
+                        m_ticktimer.Enabled = false;
+                        ShowAndUpdateDisassembly();
+                        break;
+                    }
+                }
+                else
+                {
+                    break;
                 }
             }
         }
 
+        private void ShowAndUpdateDisassembly()
+        {
+            if (m_dsfrm == null)
+            {
+                ShowDisassembly();
+            }
+            m_dsfrm.Invoke(new DisassembleForm.UpdateFormCallback(m_dsfrm.UpdateAll), new object[] { });
+        }
+
         private void toolStripButton1_Click_1(object sender, EventArgs e)
+        {
+            ShowDisassembly();
+        }
+
+        private void ShowDisassembly()
         {
             m_dsfrm = new DisassembleForm(m_gameboy, m_screen_surf, m_tilemap_surf, m_currentemulationstate, m_ticktimer);
             m_dsfrm.Show(this);

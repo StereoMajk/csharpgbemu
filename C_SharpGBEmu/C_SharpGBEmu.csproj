@@ -73,6 +73,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AcceleratorKey.cs" />
+    <Compile Include="BreakPoint.cs" />
     <Compile Include="BufferedPanel.cs">
       <SubType>UserControl</SubType>
     </Compile>

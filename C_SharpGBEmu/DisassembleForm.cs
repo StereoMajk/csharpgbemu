@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using System.Threading;
 using XPTable.Models;
 using SdlDotNet.Graphics;
+using System.Diagnostics;
 
 namespace C_SharpGBEmu
 {
@@ -26,14 +27,6 @@ namespace C_SharpGBEmu
     //}   
     public partial class DisassembleForm : Form
     {
-
-        public class BreakPoint
-        {
-            public BreakPoint(int aadress) { adress = aadress; enabled = true; }
-            public int adress;
-            public bool enabled;
-        };
-
         private EmulationState m_emulationstate;
         System.Timers.Timer m_ticktimer;
         Z80Cpu m_cpu;
@@ -51,12 +44,10 @@ namespace C_SharpGBEmu
         int m_maxmemoryheight;
         int m_maxmemoryadress;
         int m_selecteddisasmlocation;
-        int m_mouseselecteddisasmlocation;
-        long m_runToCursorBreakpoint;        
+        int m_mouseselecteddisasmlocation;   
         bool m_runningSimulation = false;
         int m_stacklinesvisible;
         VRAMForm m_vramform=null;
-        List<BreakPoint> m_breakpointlist;
         private enum Accelerators
          { Unspecified = 0, StepIn, StepOver };
         Hashtable m_accelHash;
@@ -65,7 +56,7 @@ namespace C_SharpGBEmu
             m_emulationstate = emulationState;
             m_ticktimer = tickTimer;
             m_ticktimer.Elapsed += TickTimer_Tick;
-            m_breakpointlist=new List<BreakPoint>();
+            m_emulationstate.Breakpoints=new List<BreakPoint>();
             m_memoryfnt = new System.Drawing.Font("Microsoft Sans Serif", 8);
             m_disasmfnt = new System.Drawing.Font("Microsoft Sans Serif", 8);
             m_memdrawpnt = new Point();
@@ -125,7 +116,7 @@ namespace C_SharpGBEmu
             m_maxmemoryadress = 0;
             m_selecteddisasmlocation = 0;
             m_mouseselecteddisasmlocation = 0;
-            m_runToCursorBreakpoint = -1;
+            m_emulationstate.RunToCursorBreakpoint = -1;
             m_adresslinesvisible = MemoryPanel.Height / m_memoryfnt.Height;
             m_disasmlinesvisible = DisasmPanel.Height / m_disasmfnt.Height;
             m_stacklinesvisible = StackPanel1.Height / m_disasmfnt.Height;
@@ -164,16 +155,16 @@ namespace C_SharpGBEmu
                 int enabled = settings.GetSetting("Disassembly/BreakPoints/BreakPoint" + counter + "/Enabled", 0);
                 BreakPoint bp = new BreakPoint(adress);
                 bp.enabled = (enabled == 1);
-                m_breakpointlist.Add(bp);                
+                m_emulationstate.Breakpoints.Add(bp);                
                 counter++;
             }
         }
         void SaveBreakpoints()
         {
             XMLSettings.Settings settings = new XMLSettings.Settings();
-            settings.PutSetting("Disassembly/BreakPoints/Count", m_breakpointlist.Count);
+            settings.PutSetting("Disassembly/BreakPoints/Count", m_emulationstate.Breakpoints.Count);
             int counter = 0;
-            foreach (BreakPoint bp in m_breakpointlist)
+            foreach (BreakPoint bp in m_emulationstate.Breakpoints)
             {
                 settings.PutSetting("Disassembly/BreakPoints/BreakPoint" + counter + "/Adress", bp.adress);
                 settings.PutSetting("Disassembly/BreakPoints/BreakPoint" + counter + "/Enabled", bp.enabled ? 1:0);
@@ -396,7 +387,7 @@ namespace C_SharpGBEmu
         }
         public delegate void UpdateFormCallback();
 
-        private void UpdateAll()
+        public void UpdateAll()
         {
             AFTextBox.Text = PadHexString(m_cpu.AF.w.ToString("X"));
             BCTextBox.Text = PadHexString(m_cpu.BC.w.ToString("X"));
@@ -464,7 +455,7 @@ namespace C_SharpGBEmu
                 m_disasmdrawpnt.X = 0;
                 Z80DisassembledLine currentline = (Z80DisassembledLine)linelist[i];
                 bool isBreakpoint=false;
-                foreach (BreakPoint bp in m_breakpointlist)
+                foreach (BreakPoint bp in m_emulationstate.Breakpoints)
                 {
                     if (currentline.PC == bp.adress)
                     {
@@ -477,7 +468,7 @@ namespace C_SharpGBEmu
                     dc.FillRectangle(Brushes.LightBlue, m_disasmdrawpnt.X, m_disasmdrawpnt.Y, DisasmPanel.Width, m_disasmfnt.Height);
                     currentbrush = Brushes.White;
                 }
-                if (i == m_runToCursorBreakpoint)
+                if (i == m_emulationstate.RunToCursorBreakpoint)
                 {
                     dc.DrawRectangle(blackPen, m_disasmdrawpnt.X, m_disasmdrawpnt.Y, DisasmPanel.Width, m_disasmfnt.Height);
                     dc.FillRectangle(Brushes.Khaki, m_disasmdrawpnt.X, m_disasmdrawpnt.Y, DisasmPanel.Width, m_disasmfnt.Height);
@@ -590,71 +581,7 @@ namespace C_SharpGBEmu
 
         private void TickTimer_Tick(object sender, EventArgs e)
         {            
-            if (!m_runningSimulation)
-            {                
-                m_runningSimulation = true;
-                for (int i = 0; i < 70224; i++)
-                {
-                    foreach (BreakPoint bp in m_breakpointlist)
-                    {
-                        if (!bp.enabled)
-                            continue;
-                        if (bp.adress == m_gameboy.cpu.PC)
-                        {
-                            m_emulationstate.IsPaused = true;
-                            m_ticktimer.Enabled = false;
-                            this.Invoke(new UpdateFormCallback(this.UpdateAll), new object[] { });
-                            //UpdateAll();
-                            break;
-                        }
-                    }
-                    if (m_runToCursorBreakpoint != -1)
-                    {
-                        if (m_runToCursorBreakpoint == m_gameboy.cpu.PC)
-                        {
-                            m_runToCursorBreakpoint = -1;
-                            m_emulationstate.IsPaused = true;
-                            m_ticktimer.Enabled = false;
-                            this.Invoke(new UpdateFormCallback(this.UpdateAll), new object[] { });
-                            break;
-                        }
-                    }
-                    if (!m_emulationstate.IsPaused)
-                    {
-                        try
-                        {
-                            m_gameboy.Run(1);
-                        }
-                        catch (Gameboy.InvalidWriteAccessException ie)
-                        {
-                            m_runToCursorBreakpoint = -1;
-                            m_emulationstate.IsPaused = true;
-                            m_ticktimer.Enabled = false;
-                            this.Invoke(new UpdateFormCallback(this.UpdateAll), new object[] { });
-                            break;
-                        }
-                        catch (Gameboy.InvalidReadAccessException ie)
-                        {
-                            m_runToCursorBreakpoint = -1;
-                            m_emulationstate.IsPaused = true;
-                            m_ticktimer.Enabled = false;
-                            this.Invoke(new UpdateFormCallback(this.UpdateAll), new object[] { });
-                            break;
-                        }
-                        catch (Z80Cpu.InvalidOpCodeException ie)
-                        {
-                            m_runToCursorBreakpoint = -1;
-                            m_emulationstate.IsPaused = true;
-                            m_ticktimer.Enabled = false;
-                            this.Invoke(new UpdateFormCallback(this.UpdateAll), new object[] { });
-                            break;
-                        }
-                    }
-                    else
-                        break;
-                }
-                m_runningSimulation = false;
-            }
+            
         }
 
         private void RunToCursorMenuItem_Click(object sender, EventArgs e)
@@ -662,7 +589,7 @@ namespace C_SharpGBEmu
             ArrayList linelist = m_cpu.GetDisassembly();
             
             Z80DisassembledLine selectedLine = (Z80DisassembledLine)linelist[m_mouseselecteddisasmlocation];
-            m_runToCursorBreakpoint = selectedLine.PC;
+            m_emulationstate.RunToCursorBreakpoint = selectedLine.PC;
             DisasmPanel.Invalidate();
             m_ticktimer.Enabled = true;
             m_emulationstate.IsPaused = false;            
@@ -686,7 +613,7 @@ namespace C_SharpGBEmu
             Z80DisassembledLine selectedLine = (Z80DisassembledLine)linelist[m_mouseselecteddisasmlocation];
             bool found = false;
             BreakPoint oldBreakpoint = new BreakPoint(0);
-            foreach (BreakPoint bp in m_breakpointlist)
+            foreach (BreakPoint bp in m_emulationstate.Breakpoints)
             {
                 if (bp.adress == selectedLine.PC)
                 {
@@ -697,10 +624,10 @@ namespace C_SharpGBEmu
             if (found)
             {
                 m_mouseselecteddisasmlocation = -1;
-                m_breakpointlist.Remove(oldBreakpoint);
+                m_emulationstate.Breakpoints.Remove(oldBreakpoint);
             }
             else
-                m_breakpointlist.Add(new BreakPoint((int)selectedLine.PC));
+                m_emulationstate.Breakpoints.Add(new BreakPoint((int)selectedLine.PC));
 
             SaveBreakpoints();
             DisasmPanel.Invalidate();
