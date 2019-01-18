@@ -28,95 +28,119 @@ namespace C_SharpGBEmu
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            this.MainSplitter = new System.Windows.Forms.SplitContainer();
-            this.MainFormToolStrip = new System.Windows.Forms.ToolStrip();
-            this.OpenDebuggerButton = new System.Windows.Forms.ToolStripButton();
-            this.RunButton = new System.Windows.Forms.ToolStripButton();
-            this.MainSplitter.Panel1.SuspendLayout();
-            this.MainSplitter.SuspendLayout();
-            this.MainFormToolStrip.SuspendLayout();
+            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.loadRomToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.debuggerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.vRAMToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.mainPanel = new System.Windows.Forms.Panel();
+            this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
-            // MainSplitter
+            // menuStrip1
             // 
-            this.MainSplitter.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.MainSplitter.IsSplitterFixed = true;
-            this.MainSplitter.Location = new System.Drawing.Point(0, 0);
-            this.MainSplitter.Name = "MainSplitter";
-            this.MainSplitter.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.fileToolStripMenuItem,
+            this.viewToolStripMenuItem,
+            this.aboutToolStripMenuItem});
+            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip1.Name = "menuStrip1";
+            this.menuStrip1.Size = new System.Drawing.Size(258, 24);
+            this.menuStrip1.TabIndex = 3;
+            this.menuStrip1.Text = "menuStrip1";
             // 
-            // MainSplitter.Panel1
+            // fileToolStripMenuItem
             // 
-            this.MainSplitter.Panel1.Controls.Add(this.MainFormToolStrip);
+            this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.loadRomToolStripMenuItem,
+            this.exitToolStripMenuItem});
+            this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
+            this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
+            this.fileToolStripMenuItem.Text = "File";
             // 
-            // MainSplitter.Panel2
+            // loadRomToolStripMenuItem
             // 
-            this.MainSplitter.Panel2.Paint += new System.Windows.Forms.PaintEventHandler(this.MainSplitter_Panel2_Paint);
-            this.MainSplitter.Size = new System.Drawing.Size(309, 288);
-            this.MainSplitter.SplitterDistance = 25;
-            this.MainSplitter.TabIndex = 2;
+            this.loadRomToolStripMenuItem.Name = "loadRomToolStripMenuItem";
+            this.loadRomToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.loadRomToolStripMenuItem.Text = "Open...";
+            this.loadRomToolStripMenuItem.Click += new System.EventHandler(this.loadRomToolStripMenuItem_Click);
             // 
-            // MainFormToolStrip
+            // exitToolStripMenuItem
             // 
-            this.MainFormToolStrip.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.MainFormToolStrip.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-            this.MainFormToolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.OpenDebuggerButton,
-            this.RunButton});
-            this.MainFormToolStrip.Location = new System.Drawing.Point(0, 0);
-            this.MainFormToolStrip.Name = "MainFormToolStrip";
-            this.MainFormToolStrip.Size = new System.Drawing.Size(309, 25);
-            this.MainFormToolStrip.TabIndex = 2;
-            this.MainFormToolStrip.Text = "toolStrip2";
+            this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.exitToolStripMenuItem.Text = "Exit";
+            this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
-            // OpenDebuggerButton
+            // aboutToolStripMenuItem
             // 
-            this.OpenDebuggerButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.OpenDebuggerButton.Image = ((System.Drawing.Image)(resources.GetObject("OpenDebuggerButton.Image")));
-            this.OpenDebuggerButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.OpenDebuggerButton.Name = "OpenDebuggerButton";
-            this.OpenDebuggerButton.Size = new System.Drawing.Size(23, 22);
-            this.OpenDebuggerButton.Text = "Disassembly";
-            this.OpenDebuggerButton.Click += new System.EventHandler(this.toolStripButton1_Click_1);
+            this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(52, 20);
+            this.aboutToolStripMenuItem.Text = "About";
             // 
-            // RunButton
+            // viewToolStripMenuItem
             // 
-            this.RunButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.RunButton.Image = ((System.Drawing.Image)(resources.GetObject("RunButton.Image")));
-            this.RunButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.RunButton.Name = "RunButton";
-            this.RunButton.Size = new System.Drawing.Size(23, 22);
-            this.RunButton.Text = "RunButton";
-            this.RunButton.Click += new System.EventHandler(this.RunButton_Click_1);
+            this.viewToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.debuggerToolStripMenuItem,
+            this.vRAMToolStripMenuItem});
+            this.viewToolStripMenuItem.Name = "viewToolStripMenuItem";
+            this.viewToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
+            this.viewToolStripMenuItem.Text = "View";
+            // 
+            // debuggerToolStripMenuItem
+            // 
+            this.debuggerToolStripMenuItem.Name = "debuggerToolStripMenuItem";
+            this.debuggerToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.debuggerToolStripMenuItem.Text = "Debugger";
+            this.debuggerToolStripMenuItem.Click += new System.EventHandler(this.debuggerToolStripMenuItem_Click);
+            // 
+            // vRAMToolStripMenuItem
+            // 
+            this.vRAMToolStripMenuItem.Name = "vRAMToolStripMenuItem";
+            this.vRAMToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.vRAMToolStripMenuItem.Text = "VRAM";
+            this.vRAMToolStripMenuItem.Click += new System.EventHandler(this.vRAMToolStripMenuItem_Click);
+            // 
+            // mainPanel
+            // 
+            this.mainPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.mainPanel.Location = new System.Drawing.Point(0, 24);
+            this.mainPanel.Name = "mainPanel";
+            this.mainPanel.Size = new System.Drawing.Size(258, 257);
+            this.mainPanel.TabIndex = 4;
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(309, 288);
-            this.Controls.Add(this.MainSplitter);
+            this.ClientSize = new System.Drawing.Size(258, 281);
+            this.Controls.Add(this.mainPanel);
+            this.Controls.Add(this.menuStrip1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MainMenuStrip = this.menuStrip1;
             this.Name = "MainForm";
             this.Text = "MainForm";
             this.Load += new System.EventHandler(this.Main_Load);
-            this.MainSplitter.Panel1.ResumeLayout(false);
-            this.MainSplitter.Panel1.PerformLayout();
-            this.MainSplitter.ResumeLayout(false);
-            this.MainFormToolStrip.ResumeLayout(false);
-            this.MainFormToolStrip.PerformLayout();
+            this.menuStrip1.ResumeLayout(false);
+            this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
         #endregion
-
-        private System.Windows.Forms.SplitContainer MainSplitter;
-        private System.Windows.Forms.ToolStrip MainFormToolStrip;
-        private System.Windows.Forms.ToolStripButton OpenDebuggerButton;
-        private System.Windows.Forms.ToolStripButton RunButton;
-
-
+        private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem loadRomToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem viewToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem debuggerToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem vRAMToolStripMenuItem;
+        private System.Windows.Forms.Panel mainPanel;
     }
 }
 

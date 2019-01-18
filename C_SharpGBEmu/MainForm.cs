@@ -37,6 +37,7 @@ namespace C_SharpGBEmu
         public static byte PIXEL6 = 0x04;
         public static byte PIXEL7 = 0x02;
         public static byte PIXEL8 = 0x01;
+        private VRAMForm m_vramform;
 
         public MainForm(string[] args)
         {
@@ -52,7 +53,7 @@ namespace C_SharpGBEmu
             m_gameboy.ReadCart(m_args[0]);
             m_screen_surface_control = new SdlDotNet.Windows.SurfaceControl() { Width = 256, Height = 256 };
             m_screen_surface_control.Location = new System.Drawing.Point(0, 0);            
-            MainSplitter.Panel2.Controls.Add(m_screen_surface_control);
+            mainPanel.Controls.Add(m_screen_surface_control);
 
             m_screenthread = new Thread(new ThreadStart(SdlDotNet.Core.Events.Run));
             m_screenthread.IsBackground = true;
@@ -168,10 +169,14 @@ namespace C_SharpGBEmu
 
         private void RunButton_Click_1(object sender, EventArgs e)
         {
-            m_currentemulationstate.IsPaused = false;
-            m_ticktimer.Enabled = true;            
+            RunEmulator();
         }
 
+        private void RunEmulator()
+        {
+            m_currentemulationstate.IsPaused = false;
+            m_ticktimer.Enabled = true;
+        }
 
         private void OnKeyboardDown(object sender, SdlDotNet.Input.KeyboardEventArgs e)
         {
@@ -477,6 +482,37 @@ namespace C_SharpGBEmu
         private void MainSplitter_Panel2_Paint(object sender, PaintEventArgs e)
         {
 
+        }
+
+        private void loadRomToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            using (OpenFileDialog dialog = new OpenFileDialog())
+            {                
+                if(dialog.ShowDialog() == DialogResult.OK)
+                {
+                    m_currentemulationstate = new EmulationState();
+                    m_gameboy = new Gameboy();
+                    m_gameboy.ReadCart(dialog.FileName);
+                    RunEmulator();
+                }
+            }
+                
+        }
+
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
+
+        private void debuggerToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ShowDisassembly();
+        }
+
+        private void vRAMToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            m_vramform = new VRAMForm(m_gameboy, m_screen_surf, m_tilemap_surf);
+            m_vramform.Show(this);
         }
     }
 }
