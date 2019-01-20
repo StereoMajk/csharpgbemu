@@ -77,11 +77,11 @@
     <Compile Include="BufferedPanel.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="DisassembleForm.cs">
+    <Compile Include="DebuggerForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="DisassembleForm.Designer.cs">
-      <DependentUpon>DisassembleForm.cs</DependentUpon>
+    <Compile Include="DebuggerForm.Designer.cs">
+      <DependentUpon>DebuggerForm.cs</DependentUpon>
     </Compile>
     <Compile Include="EmulationState.cs" />
     <Compile Include="MainForm.cs">
@@ -93,9 +93,9 @@
     <Compile Include="Gameboy.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="DisassembleForm.resx">
+    <EmbeddedResource Include="DebuggerForm.resx">
       <SubType>Designer</SubType>
-      <DependentUpon>DisassembleForm.cs</DependentUpon>
+      <DependentUpon>DebuggerForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <SubType>Designer</SubType>

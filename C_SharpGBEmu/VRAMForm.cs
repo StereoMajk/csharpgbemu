@@ -25,11 +25,10 @@ namespace C_SharpGBEmu
             }
         }
         Gameboy m_gameboy;
-        private SdlDotNet.Graphics.Surface m_screen_surf=null;
-        private SdlDotNet.Graphics.Surface m_tilemap_surf = null;
+        private Bitmap m_screen_surf=null;
+        private Bitmap m_tilemap_surf = null;
         bool m_screen_selected = true;
         bool m_paused = false;
-        Thread screenthread;
         SdlDotNet.Graphics.Surface m_screenbmp;
         int tWidth = 128;
         int tHeight = 256;
@@ -43,34 +42,26 @@ namespace C_SharpGBEmu
         public static byte PIXEL6 = 0x04;       
         public static byte PIXEL7 = 0x02;       
         public static byte PIXEL8 = 0x01;       
-        private Bitmap screenBitmap;
-        private SurfaceControl m_screen_surface_control;
-        private SurfaceControl m_tilemap_surface_control;
+
         private System.Timers.Timer m_ticktimer;
 
-        public VRAMForm(Gameboy gb, Surface screen, Surface tilemap)
+        public VRAMForm(Gameboy gb, Bitmap screen, Bitmap tilemap)
         {            
             InitializeComponent();
             m_gameboy = gb;
             m_screen_surf = screen;
             m_tilemap_surf = tilemap;
+            vramPictureBox.Image = m_screen_surf;
+            tilemapPictureBox.Image = m_tilemap_surf;
         }
 
         private void VRAMForm_Load(object sender, EventArgs e)
-        {
-            m_screen_surface_control = new SdlDotNet.Windows.SurfaceControl() { Width = 256, Height = 256 };
-            m_screen_surface_control.Location = new System.Drawing.Point(0, 0);
-            ScreenTabPage.Controls.Add(m_screen_surface_control);
-
-            m_tilemap_surface_control = new SdlDotNet.Windows.SurfaceControl() { Width = 256, Height = 256 };
-            m_tilemap_surface_control.Location = new System.Drawing.Point(0, 0);
-            TilemapTabPage.Controls.Add(m_tilemap_surface_control);
-
+        {           
             m_screenbmp = m_gameboy.m_screen;
             KeyPreview = true;
             m_ticktimer = new System.Timers.Timer();
             m_ticktimer.Elapsed += new System.Timers.ElapsedEventHandler(TickTimer_Tick);
-            m_ticktimer.Interval = 160;
+            m_ticktimer.Interval = 1;
             m_ticktimer.Enabled = true;
         }
 
@@ -82,17 +73,16 @@ namespace C_SharpGBEmu
         public void UpdateForm()
         {
             if (m_screen_selected)
-                m_screen_surface_control.Blit(m_screen_surf);
+            {
+                vramPictureBox.Invalidate();
+                vramPictureBox.Refresh();
+            }
             else
-                m_tilemap_surface_control.Blit(m_tilemap_surf);
+            {
+                tilemapPictureBox.Refresh();
+            }
 
             
-        }
-
-        public void UpdateAll() 
-        {
-        //    ScreenPanel_Paint(null, null);
-//            TileMapPanel_Paint(null, null);
         }
       
         private void VRAMTabControl_Selected(object sender, TabControlEventArgs e)
@@ -214,12 +204,7 @@ namespace C_SharpGBEmu
             {
                 m_gameboy.ButtonUp(Gameboy.BUTTON_B);
             }
-        }
-
-        private void VRAMForm_KeyPress(object sender, KeyPressEventArgs e)
-        {
-
-        }
+        }       
 
         private void UpButton_MouseDown(object sender, MouseEventArgs e)
         {

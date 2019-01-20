@@ -30,6 +30,7 @@ namespace C_SharpGBEmu
         {
             this.VRAMTabControl = new System.Windows.Forms.TabControl();
             this.ScreenTabPage = new System.Windows.Forms.TabPage();
+            this.vramPictureBox = new System.Windows.Forms.PictureBox();
             this.DownButton = new System.Windows.Forms.Button();
             this.UpButton = new System.Windows.Forms.Button();
             this.RightButton = new System.Windows.Forms.Button();
@@ -38,8 +39,12 @@ namespace C_SharpGBEmu
             this.AButton = new System.Windows.Forms.Button();
             this.StartButton = new System.Windows.Forms.Button();
             this.TilemapTabPage = new System.Windows.Forms.TabPage();
+            this.tilemapPictureBox = new System.Windows.Forms.PictureBox();
             this.VRAMTabControl.SuspendLayout();
             this.ScreenTabPage.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.vramPictureBox)).BeginInit();
+            this.TilemapTabPage.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.tilemapPictureBox)).BeginInit();
             this.SuspendLayout();
             // 
             // VRAMTabControl
@@ -56,6 +61,7 @@ namespace C_SharpGBEmu
             // 
             // ScreenTabPage
             // 
+            this.ScreenTabPage.Controls.Add(this.vramPictureBox);
             this.ScreenTabPage.Controls.Add(this.DownButton);
             this.ScreenTabPage.Controls.Add(this.UpButton);
             this.ScreenTabPage.Controls.Add(this.RightButton);
@@ -70,6 +76,14 @@ namespace C_SharpGBEmu
             this.ScreenTabPage.TabIndex = 0;
             this.ScreenTabPage.Text = "Screen";
             this.ScreenTabPage.UseVisualStyleBackColor = true;
+            // 
+            // vramPictureBox
+            // 
+            this.vramPictureBox.Location = new System.Drawing.Point(269, 4);
+            this.vramPictureBox.Name = "vramPictureBox";
+            this.vramPictureBox.Size = new System.Drawing.Size(256, 256);
+            this.vramPictureBox.TabIndex = 9;
+            this.vramPictureBox.TabStop = false;
             // 
             // DownButton
             // 
@@ -117,7 +131,7 @@ namespace C_SharpGBEmu
             // 
             // BButton
             // 
-            this.BButton.Location = new System.Drawing.Point(256, 326);
+            this.BButton.Location = new System.Drawing.Point(256, 332);
             this.BButton.Name = "BButton";
             this.BButton.Size = new System.Drawing.Size(75, 23);
             this.BButton.TabIndex = 4;
@@ -128,7 +142,7 @@ namespace C_SharpGBEmu
             // 
             // AButton
             // 
-            this.AButton.Location = new System.Drawing.Point(256, 297);
+            this.AButton.Location = new System.Drawing.Point(256, 303);
             this.AButton.Name = "AButton";
             this.AButton.Size = new System.Drawing.Size(75, 23);
             this.AButton.TabIndex = 3;
@@ -139,7 +153,7 @@ namespace C_SharpGBEmu
             // 
             // StartButton
             // 
-            this.StartButton.Location = new System.Drawing.Point(256, 256);
+            this.StartButton.Location = new System.Drawing.Point(256, 266);
             this.StartButton.Name = "StartButton";
             this.StartButton.Size = new System.Drawing.Size(75, 23);
             this.StartButton.TabIndex = 2;
@@ -150,6 +164,7 @@ namespace C_SharpGBEmu
             // 
             // TilemapTabPage
             // 
+            this.TilemapTabPage.Controls.Add(this.tilemapPictureBox);
             this.TilemapTabPage.Location = new System.Drawing.Point(4, 22);
             this.TilemapTabPage.Name = "TilemapTabPage";
             this.TilemapTabPage.Padding = new System.Windows.Forms.Padding(3);
@@ -157,6 +172,14 @@ namespace C_SharpGBEmu
             this.TilemapTabPage.TabIndex = 1;
             this.TilemapTabPage.Text = "TileMap";
             this.TilemapTabPage.UseVisualStyleBackColor = true;
+            // 
+            // tilemapPictureBox
+            // 
+            this.tilemapPictureBox.Location = new System.Drawing.Point(286, 4);
+            this.tilemapPictureBox.Name = "tilemapPictureBox";
+            this.tilemapPictureBox.Size = new System.Drawing.Size(256, 256);
+            this.tilemapPictureBox.TabIndex = 0;
+            this.tilemapPictureBox.TabStop = false;
             // 
             // VRAMForm
             // 
@@ -168,10 +191,12 @@ namespace C_SharpGBEmu
             this.Text = "VRAMForm";
             this.Load += new System.EventHandler(this.VRAMForm_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.VRAMForm_KeyDown);
-            this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.VRAMForm_KeyPress);
             this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.VRAMForm_KeyUp);
             this.VRAMTabControl.ResumeLayout(false);
             this.ScreenTabPage.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.vramPictureBox)).EndInit();
+            this.TilemapTabPage.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.tilemapPictureBox)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -188,5 +213,7 @@ namespace C_SharpGBEmu
         private System.Windows.Forms.Button UpButton;
         private System.Windows.Forms.Button RightButton;
         private System.Windows.Forms.Button LeftButton;
+        private System.Windows.Forms.PictureBox vramPictureBox;
+        private System.Windows.Forms.PictureBox tilemapPictureBox;
     }
 }

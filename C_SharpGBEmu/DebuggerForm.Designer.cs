@@ -1,6 +1,6 @@
 namespace C_SharpGBEmu
 {
-    partial class DisassembleForm
+    partial class DebuggerForm
     {
         /// <summary>
         /// Required designer variable.
@@ -29,7 +29,9 @@ namespace C_SharpGBEmu
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DisassembleForm));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DebuggerForm));
+            XPTable.Models.DataSourceColumnBinder dataSourceColumnBinder1 = new XPTable.Models.DataSourceColumnBinder();
+            XPTable.Renderers.DragDropRenderer dragDropRenderer1 = new XPTable.Renderers.DragDropRenderer();
             XPTable.Models.Row row1 = new XPTable.Models.Row();
             this.DisassembleToolStrip = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
@@ -86,9 +88,6 @@ namespace C_SharpGBEmu
             this.PauseToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.RunButton = new System.Windows.Forms.ToolStripButton();
             this.VRAMButton = new System.Windows.Forms.ToolStripButton();
-            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
-            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.loadRomToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.TickTimer = new System.Windows.Forms.Timer(this.components);
             this.DisAsmPanelContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.RunToCursorMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -124,7 +123,6 @@ namespace C_SharpGBEmu
             this.splitContainer7.Panel2.SuspendLayout();
             this.splitContainer7.SuspendLayout();
             this.MainToolStrip.SuspendLayout();
-            this.menuStrip1.SuspendLayout();
             this.DisAsmPanelContextMenuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -236,8 +234,8 @@ namespace C_SharpGBEmu
             this.DisasmPanel.Size = new System.Drawing.Size(360, 566);
             this.DisasmPanel.TabIndex = 0;
             this.DisasmPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.DisasmPanel_Paint);
-            this.DisasmPanel.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.DisasmPanel_MouseDoubleClick);
             this.DisasmPanel.MouseClick += new System.Windows.Forms.MouseEventHandler(this.DisasmPanel_MouseClick);
+            this.DisasmPanel.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.DisasmPanel_MouseDoubleClick);
             this.DisasmPanel.Resize += new System.EventHandler(this.DisasmPanel_Resize);
             // 
             // DisasmScrollBar
@@ -252,13 +250,20 @@ namespace C_SharpGBEmu
             // DisassembleTable
             // 
             this.DisassembleTable.AllowSelection = false;
+            this.DisassembleTable.BorderColor = System.Drawing.Color.Black;
             this.DisassembleTable.ColumnModel = this.DisasmColumnModel;
+            this.DisassembleTable.DataMember = null;
+            this.DisassembleTable.DataSourceColumnBinder = dataSourceColumnBinder1;
+            dragDropRenderer1.ForeColor = System.Drawing.Color.Red;
+            this.DisassembleTable.DragDropRenderer = dragDropRenderer1;
+            this.DisassembleTable.GridLinesContrainedToData = false;
             this.DisassembleTable.Location = new System.Drawing.Point(132, 44);
             this.DisassembleTable.Name = "DisassembleTable";
             this.DisassembleTable.Size = new System.Drawing.Size(147, 209);
             this.DisassembleTable.TabIndex = 3;
             this.DisassembleTable.TableModel = this.DisasmTableModel;
             this.DisassembleTable.Text = "table1";
+            this.DisassembleTable.UnfocusedBorderColor = System.Drawing.Color.Black;
             this.DisassembleTable.Visible = false;
             // 
             // DisasmColumnModel
@@ -270,25 +275,36 @@ namespace C_SharpGBEmu
             // 
             // PCColumn1
             // 
+            this.PCColumn1.IsTextTrimmed = false;
             this.PCColumn1.Text = "PC";
             // 
             // OPCodeColumn
             // 
+            this.OPCodeColumn.IsTextTrimmed = false;
             this.OPCodeColumn.Text = "OPCode";
             this.OPCodeColumn.Width = 85;
             // 
             // OPCodeColumnHex
             // 
+            this.OPCodeColumnHex.IsTextTrimmed = false;
             this.OPCodeColumnHex.Text = "Hex";
             // 
             // DisasmTableModel
             // 
+            row1.ChildIndex = 0;
+            row1.ExpandSubRows = true;
+            row1.Height = 15;
             this.DisasmTableModel.Rows.AddRange(new XPTable.Models.Row[] {
             row1});
             // 
             // textColumn1
             // 
+            this.textColumn1.IsTextTrimmed = false;
             this.textColumn1.Text = "PC";
+            // 
+            // PCColumn
+            // 
+            this.PCColumn.IsTextTrimmed = false;
             // 
             // splitContainer2
             // 
@@ -643,7 +659,6 @@ namespace C_SharpGBEmu
             // splitContainer7.Panel1
             // 
             this.splitContainer7.Panel1.Controls.Add(this.MainToolStrip);
-            this.splitContainer7.Panel1.Controls.Add(this.menuStrip1);
             // 
             // splitContainer7.Panel2
             // 
@@ -707,31 +722,6 @@ namespace C_SharpGBEmu
             this.VRAMButton.Text = "VRAM";
             this.VRAMButton.Click += new System.EventHandler(this.VRAMButton_Click);
             // 
-            // menuStrip1
-            // 
-            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripMenuItem1});
-            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
-            this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(965, 24);
-            this.menuStrip1.TabIndex = 1;
-            this.menuStrip1.Text = "menuStrip1";
-            // 
-            // toolStripMenuItem1
-            // 
-            this.toolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.loadRomToolStripMenuItem});
-            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(37, 20);
-            this.toolStripMenuItem1.Text = "File";
-            // 
-            // loadRomToolStripMenuItem
-            // 
-            this.loadRomToolStripMenuItem.Name = "loadRomToolStripMenuItem";
-            this.loadRomToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.loadRomToolStripMenuItem.Text = "Load ROM...";
-            this.loadRomToolStripMenuItem.Click += new System.EventHandler(this.loadRomToolStripMenuItem_Click);
-            // 
             // TickTimer
             // 
             this.TickTimer.Interval = 160;
@@ -743,19 +733,19 @@ namespace C_SharpGBEmu
             this.RunToCursorMenuItem,
             this.ToggleBreakpointMenuItem});
             this.DisAsmPanelContextMenuStrip.Name = "DisAsmPanelContextMenuStrip";
-            this.DisAsmPanelContextMenuStrip.Size = new System.Drawing.Size(172, 48);
+            this.DisAsmPanelContextMenuStrip.Size = new System.Drawing.Size(171, 48);
             // 
             // RunToCursorMenuItem
             // 
             this.RunToCursorMenuItem.Name = "RunToCursorMenuItem";
-            this.RunToCursorMenuItem.Size = new System.Drawing.Size(171, 22);
+            this.RunToCursorMenuItem.Size = new System.Drawing.Size(170, 22);
             this.RunToCursorMenuItem.Text = "Run to cursor";
             this.RunToCursorMenuItem.Click += new System.EventHandler(this.RunToCursorMenuItem_Click);
             // 
             // ToggleBreakpointMenuItem
             // 
             this.ToggleBreakpointMenuItem.Name = "ToggleBreakpointMenuItem";
-            this.ToggleBreakpointMenuItem.Size = new System.Drawing.Size(171, 22);
+            this.ToggleBreakpointMenuItem.Size = new System.Drawing.Size(170, 22);
             this.ToggleBreakpointMenuItem.Text = "Toggle breakpoint";
             this.ToggleBreakpointMenuItem.Click += new System.EventHandler(this.ToggleBreakpointMenuItem_Click);
             // 
@@ -766,9 +756,9 @@ namespace C_SharpGBEmu
             this.ClientSize = new System.Drawing.Size(965, 650);
             this.Controls.Add(this.splitContainer7);
             this.Name = "DisassembleForm";
-            this.Text = "DisassembleForm";
-            this.Load += new System.EventHandler(this.DisassembleForm_Load);
+            this.Text = "Debugger";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.DisassembleForm_FormClosing);
+            this.Load += new System.EventHandler(this.DisassembleForm_Load);
             this.DisassembleToolStrip.ResumeLayout(false);
             this.DisassembleToolStrip.PerformLayout();
             this.splitContainer1.Panel1.ResumeLayout(false);
@@ -809,8 +799,6 @@ namespace C_SharpGBEmu
             this.splitContainer7.ResumeLayout(false);
             this.MainToolStrip.ResumeLayout(false);
             this.MainToolStrip.PerformLayout();
-            this.menuStrip1.ResumeLayout(false);
-            this.menuStrip1.PerformLayout();
             this.DisAsmPanelContextMenuStrip.ResumeLayout(false);
             this.ResumeLayout(false);
 
@@ -867,9 +855,6 @@ namespace C_SharpGBEmu
         private System.Windows.Forms.SplitContainer splitContainer7;
         private System.Windows.Forms.ToolStrip MainToolStrip;
         private System.Windows.Forms.ToolStripButton ResetButton;
-        private System.Windows.Forms.MenuStrip menuStrip1;
-        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
-        private System.Windows.Forms.ToolStripMenuItem loadRomToolStripMenuItem;
         private System.Windows.Forms.ToolStripButton RunButton;
         private System.Windows.Forms.ToolStripButton VRAMButton;
         private System.Windows.Forms.ToolStripButton PauseToolStripButton;

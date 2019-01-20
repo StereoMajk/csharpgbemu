@@ -25,14 +25,14 @@ namespace C_SharpGBEmu
 
     //    }
     //}   
-    public partial class DisassembleForm : Form
+    public partial class DebuggerForm : Form
     {
         private EmulationState m_emulationstate;
         System.Timers.Timer m_ticktimer;
         Z80Cpu m_cpu;
         Gameboy m_gameboy;
-        private Surface m_screen_surface;
-        private Surface m_tilemap_surface;
+        private Bitmap m_screen_surface;
+        private Bitmap m_tilemap_surface;
         System.Drawing.Font m_memoryfnt;
         System.Drawing.Font m_disasmfnt;
         Point m_memdrawpnt;
@@ -51,7 +51,7 @@ namespace C_SharpGBEmu
         private enum Accelerators
          { Unspecified = 0, StepIn, StepOver };
         Hashtable m_accelHash;
-        public DisassembleForm(Gameboy gameboy, Surface screen, Surface tilemap, EmulationState emulationState, System.Timers.Timer tickTimer)
+        public DebuggerForm(Gameboy gameboy, Bitmap screen, Bitmap tilemap, EmulationState emulationState, System.Timers.Timer tickTimer)
         {
             m_emulationstate = emulationState;
             m_ticktimer = tickTimer;
@@ -414,8 +414,6 @@ namespace C_SharpGBEmu
         {
             m_gameboy.Run(1);
             UpdateAll();
-            if (m_vramform!=null)
-                m_vramform.UpdateAll();
         }
         private string PadHexString(string inpstring)
         {
