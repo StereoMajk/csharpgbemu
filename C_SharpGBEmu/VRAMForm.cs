@@ -1,16 +1,6 @@
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Drawing.Imaging;
-using System.Text;
 using System.Windows.Forms;
-using System.Threading;
-using SdlDotNet.Core;
-using SdlDotNet.Graphics;
-using SdlDotNet.Graphics.Sprites;
-using SdlDotNet.Windows;
 using System.Timers;
 
 namespace C_SharpGBEmu
@@ -28,8 +18,7 @@ namespace C_SharpGBEmu
         private Bitmap m_screen_surf=null;
         private Bitmap m_tilemap_surf = null;
         bool m_screen_selected = true;
-        bool m_paused = false;
-        SdlDotNet.Graphics.Surface m_screenbmp;
+        bool m_paused = false;        
         int tWidth = 128;
         int tHeight = 256;
         int screenwidth = 256;
@@ -56,8 +45,7 @@ namespace C_SharpGBEmu
         }
 
         private void VRAMForm_Load(object sender, EventArgs e)
-        {           
-            m_screenbmp = m_gameboy.m_screen;
+        {                       
             KeyPreview = true;
             m_ticktimer = new System.Timers.Timer();
             m_ticktimer.Elapsed += new System.Timers.ElapsedEventHandler(TickTimer_Tick);

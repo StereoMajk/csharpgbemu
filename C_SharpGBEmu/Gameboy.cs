@@ -1,8 +1,4 @@
-using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Drawing.Imaging;
-using System.Drawing;
 
 namespace C_SharpGBEmu
 {
@@ -21,8 +17,7 @@ namespace C_SharpGBEmu
             public Z80Cpu.WriteRAMHandler handler;
         }
         List<ReadMemoryHandler> m_readMemoryHandlers;
-        List<WriteMemoryHandler> m_writeMemoryHandlers;
-        public SdlDotNet.Graphics.Surface m_screen;
+        List<WriteMemoryHandler> m_writeMemoryHandlers;       
         int Width;
         int Height;
         private Z80Cpu m_cpu;
@@ -147,9 +142,7 @@ namespace C_SharpGBEmu
             m_object_palette0[1] = m_object_palette1[1] = m_background_palette[1];
             m_object_palette0[2] = m_object_palette1[2] = m_background_palette[2];
             m_object_palette0[3] = m_object_palette1[3] = m_background_palette[3];
-
-            m_screen = new SdlDotNet.Graphics.Surface(160, 144);
-
+            
             m_readMemoryHandlers=new List<ReadMemoryHandler>();
             ReadMemoryHandler rmemhandler = new ReadMemoryHandler();
             rmemhandler.startAdress = 0xff00;
@@ -176,8 +169,8 @@ namespace C_SharpGBEmu
             echoRAMhandler2.handler = new Z80Cpu.WriteRAMHandler(EchoRamHandling2);
             m_writeMemoryHandlers.Add(echoRAMhandler2);
 
-            Width = m_screen.Width;
-            Height = m_screen.Height;
+            Width = 160;
+            Height = 144;
             
             RAM = new byte[0xffff+1];
             m_cpu = new Z80Cpu(new Z80Cpu.ReadRAMHandler(ReadRAM), new Z80Cpu.WriteRAMHandler(WriteRAM), RAM);            
@@ -606,7 +599,7 @@ namespace C_SharpGBEmu
 
             if (LY < SCANLINE_VBLANK)
             {
-                m_screen.Lock();
+                /*m_screen.Lock();
                 unsafe
                 {
                     // Get an int pointer to the start of the bitmap:
@@ -668,7 +661,7 @@ namespace C_SharpGBEmu
                     //              System.Console.WriteLine("Drawing at line " +(Width * (tile_y_size * tiley + screenmodypos) + (screenxpos) + 0));
 
                 }
-                m_screen.Unlock();
+                m_screen.Unlock();*/
             }
            
         }
