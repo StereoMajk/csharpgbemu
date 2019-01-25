@@ -89,9 +89,9 @@ namespace C_SharpGBEmu
         byte TIMA;
         byte TMA;
         byte TAC;
-        byte IE;
-        byte IF;
-        byte STAT;
+        public byte IE;
+        public byte IF;
+        public byte STAT;
         public int[] m_background_palette;
         public int[] m_object_palette0;
         public int[] m_object_palette1;

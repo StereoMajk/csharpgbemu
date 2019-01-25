@@ -1,7 +1,9 @@
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.IO;
 using System.Runtime.InteropServices;
 using System.Timers;
 using System.Windows.Forms;
@@ -115,8 +117,37 @@ namespace C_SharpGBEmu
             m_screentimer.Enabled = true;
 
             PauseEmulator();
-        }        
-   
+
+            LoadRecentRoms();
+        }
+
+        private void LoadRecentRoms()
+        {
+            XMLSettings.Settings settings = new XMLSettings.Settings();
+            var recentRoms = settings.GetSetting("Main/RecentROMs", "");
+            var recentRomsList = new List<string>(recentRoms.Split('*'));
+            recentRomsList.Reverse();
+            int index = 0;
+            openRecentToolStripMenuItem.DropDownItems.Clear();
+            foreach (var rom in recentRomsList)
+            {
+                index++;
+                if (rom != "")
+                {
+                    openRecentToolStripMenuItem.DropDownItems.Add(new ToolStripMenuItem($"{index} {Path.GetFileName(rom)} ", null, new EventHandler(OpenRecentClickHandler))
+                    {
+                        Tag = rom
+                    });
+                }
+            }
+        }
+
+        private void OpenRecentClickHandler(object sender, EventArgs e)
+        {
+            var menuItem = sender as ToolStripMenuItem;
+            LoadROM((string)menuItem.Tag);
+        }
+
         private void UpdatePictureBox()
         {
             screenPictureBox.Refresh();
@@ -429,13 +460,41 @@ namespace C_SharpGBEmu
             {
                 if (dialog.ShowDialog() == DialogResult.OK)
                 {
-                    m_currentemulationstate = new EmulationState();
-                    m_currentRomFile = dialog.FileName;
-                    m_gameboy = new Gameboy();
-                    m_gameboy.ReadCart(dialog.FileName);
-                    RunEmulator();                    
+                    LoadROM(dialog.FileName);
+                    RunEmulator();
                 }
             }
+        }
+
+        private void LoadROM(string filename)
+        {
+            m_currentemulationstate = new EmulationState();
+            m_currentRomFile = filename;
+            m_gameboy = new Gameboy();
+            m_gameboy.ReadCart(filename);
+            if (m_dsfrm != null)
+            {
+                m_dsfrm.Invoke(new DebuggerForm.UpdateFormCallback(m_dsfrm.UpdateAll), new object[] { });
+            }
+
+            XMLSettings.Settings settings = new XMLSettings.Settings();
+            var recentRoms = settings.GetSetting("Main/RecentROMs", "");
+            var recentRomsList = new List<string>(recentRoms.Split('*'));
+            foreach(var rom in recentRomsList)
+            {
+                if(rom == filename)
+                {
+                    recentRomsList.Remove(rom);
+                    break;
+                }
+            }
+            recentRomsList.Add(filename);
+            if(recentRomsList.Count > 10)
+            {
+                recentRomsList.RemoveAt(0);
+            }
+            settings.PutSetting("Main/RecentROMs", string.Join("*", recentRomsList.ToArray()));
+            LoadRecentRoms();
         }
 
         private void SetStatusLabel(string status)
@@ -583,10 +642,7 @@ namespace C_SharpGBEmu
             {
                 if (dialog.ShowDialog() == DialogResult.OK)
                 {
-                    m_currentemulationstate = new EmulationState();
-                    m_currentRomFile = dialog.FileName;
-                    m_gameboy = new Gameboy();
-                    m_gameboy.ReadCart(dialog.FileName);
+                    LoadROM(dialog.FileName);
                     PauseEmulator();                   
                 }
             }
@@ -605,6 +661,12 @@ namespace C_SharpGBEmu
             m_ticktimer.Enabled = true;
             SetStatusLabel("Running");
             pauseToolStripMenuItem.Checked = false;
+        }
+
+        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            AboutBox1 aboutBox1 = new AboutBox1();
+            aboutBox1.ShowDialog();
         }
     }
 }

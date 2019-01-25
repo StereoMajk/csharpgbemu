@@ -64,6 +64,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AboutBox1.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AboutBox1.Designer.cs">
+      <DependentUpon>AboutBox1.cs</DependentUpon>
+    </Compile>
     <Compile Include="AcceleratorKey.cs" />
     <Compile Include="BreakPoint.cs" />
     <Compile Include="BufferedPanel.cs">
@@ -85,6 +91,9 @@
     <Compile Include="Gameboy.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="AboutBox1.resx">
+      <DependentUpon>AboutBox1.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="DebuggerForm.resx">
       <SubType>Designer</SubType>
       <DependentUpon>DebuggerForm.cs</DependentUpon>

@@ -396,6 +396,12 @@ namespace C_SharpGBEmu
             HcheckBox.Checked = m_cpu.GetFlag(Z80Cpu.H_FLAG);
             NcheckBox.Checked = m_cpu.GetFlag(Z80Cpu.N_FLAG);
             CcheckBox.Checked = m_cpu.GetFlag(Z80Cpu.C_FLAG);
+            
+            LCDCtextBox.Text = m_gameboy.LCDC.ToString();
+            STATtextBox.Text = m_gameboy.STAT.ToString();
+            LYtextBox.Text = m_gameboy.LY.ToString();
+            IEtextBox.Text = m_gameboy.IE.ToString();
+            IFtextBox.Text = m_gameboy.IF.ToString();
 
             JumpToLocation(m_cpu.PC);
             MemoryPanel.Invalidate();
@@ -706,6 +712,16 @@ namespace C_SharpGBEmu
   
                 UpdateAll();
             }
+        }
+
+        private void IFtextBox_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label9_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

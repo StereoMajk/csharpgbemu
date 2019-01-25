@@ -30,9 +30,9 @@ namespace C_SharpGBEmu
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DebuggerForm));
-            XPTable.Models.DataSourceColumnBinder dataSourceColumnBinder1 = new XPTable.Models.DataSourceColumnBinder();
-            XPTable.Renderers.DragDropRenderer dragDropRenderer1 = new XPTable.Renderers.DragDropRenderer();
-            XPTable.Models.Row row1 = new XPTable.Models.Row();
+            XPTable.Models.DataSourceColumnBinder dataSourceColumnBinder2 = new XPTable.Models.DataSourceColumnBinder();
+            XPTable.Renderers.DragDropRenderer dragDropRenderer2 = new XPTable.Renderers.DragDropRenderer();
+            XPTable.Models.Row row4 = new XPTable.Models.Row();
             this.DisassembleToolStrip = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripTextBoxAdress = new System.Windows.Forms.ToolStripTextBox();
@@ -55,6 +55,8 @@ namespace C_SharpGBEmu
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.splitContainer3 = new System.Windows.Forms.SplitContainer();
             this.splitContainer8 = new System.Windows.Forms.SplitContainer();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.PCTextBox = new System.Windows.Forms.TextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.HLTextBox = new System.Windows.Forms.TextBox();
             this.AFTextBox = new System.Windows.Forms.TextBox();
@@ -69,8 +71,6 @@ namespace C_SharpGBEmu
             this.NcheckBox = new System.Windows.Forms.CheckBox();
             this.HcheckBox = new System.Windows.Forms.CheckBox();
             this.ZcheckBox = new System.Windows.Forms.CheckBox();
-            this.PCTextBox = new System.Windows.Forms.TextBox();
-            this.label12 = new System.Windows.Forms.Label();
             this.StackPanelScrollBar = new System.Windows.Forms.VScrollBar();
             this.StackPanel1 = new BufferedPanel();
             this.SPTextBox = new System.Windows.Forms.TextBox();
@@ -93,6 +93,17 @@ namespace C_SharpGBEmu
             this.RunToCursorMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ToggleBreakpointMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.loadRomFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.lcdGroupBox = new System.Windows.Forms.GroupBox();
+            this.LCDCtextBox = new System.Windows.Forms.TextBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.LYtextBox = new System.Windows.Forms.TextBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.STATtextBox = new System.Windows.Forms.TextBox();
+            this.label8 = new System.Windows.Forms.Label();
+            this.IEtextBox = new System.Windows.Forms.TextBox();
+            this.label9 = new System.Windows.Forms.Label();
+            this.IFtextBox = new System.Windows.Forms.TextBox();
             this.DisassembleToolStrip.SuspendLayout();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -110,6 +121,7 @@ namespace C_SharpGBEmu
             this.splitContainer8.Panel1.SuspendLayout();
             this.splitContainer8.Panel2.SuspendLayout();
             this.splitContainer8.SuspendLayout();
+            this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox4.SuspendLayout();
             this.splitContainer4.Panel1.SuspendLayout();
@@ -124,10 +136,12 @@ namespace C_SharpGBEmu
             this.splitContainer7.SuspendLayout();
             this.MainToolStrip.SuspendLayout();
             this.DisAsmPanelContextMenuStrip.SuspendLayout();
+            this.lcdGroupBox.SuspendLayout();
             this.SuspendLayout();
             // 
             // DisassembleToolStrip
             // 
+            this.DisassembleToolStrip.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
             this.DisassembleToolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripLabel1,
             this.toolStripTextBoxAdress,
@@ -253,9 +267,9 @@ namespace C_SharpGBEmu
             this.DisassembleTable.BorderColor = System.Drawing.Color.Black;
             this.DisassembleTable.ColumnModel = this.DisasmColumnModel;
             this.DisassembleTable.DataMember = null;
-            this.DisassembleTable.DataSourceColumnBinder = dataSourceColumnBinder1;
-            dragDropRenderer1.ForeColor = System.Drawing.Color.Red;
-            this.DisassembleTable.DragDropRenderer = dragDropRenderer1;
+            this.DisassembleTable.DataSourceColumnBinder = dataSourceColumnBinder2;
+            dragDropRenderer2.ForeColor = System.Drawing.Color.Red;
+            this.DisassembleTable.DragDropRenderer = dragDropRenderer2;
             this.DisassembleTable.GridLinesContrainedToData = false;
             this.DisassembleTable.Location = new System.Drawing.Point(132, 44);
             this.DisassembleTable.Name = "DisassembleTable";
@@ -291,11 +305,11 @@ namespace C_SharpGBEmu
             // 
             // DisasmTableModel
             // 
-            row1.ChildIndex = 0;
-            row1.ExpandSubRows = true;
-            row1.Height = 15;
+            row4.ChildIndex = 0;
+            row4.ExpandSubRows = true;
+            row4.Height = 15;
             this.DisasmTableModel.Rows.AddRange(new XPTable.Models.Row[] {
-            row1});
+            row4});
             // 
             // textColumn1
             // 
@@ -351,10 +365,10 @@ namespace C_SharpGBEmu
             // 
             // splitContainer8.Panel1
             // 
+            this.splitContainer8.Panel1.Controls.Add(this.lcdGroupBox);
+            this.splitContainer8.Panel1.Controls.Add(this.groupBox2);
             this.splitContainer8.Panel1.Controls.Add(this.groupBox1);
             this.splitContainer8.Panel1.Controls.Add(this.groupBox4);
-            this.splitContainer8.Panel1.Controls.Add(this.PCTextBox);
-            this.splitContainer8.Panel1.Controls.Add(this.label12);
             // 
             // splitContainer8.Panel2
             // 
@@ -365,6 +379,24 @@ namespace C_SharpGBEmu
             this.splitContainer8.Size = new System.Drawing.Size(577, 243);
             this.splitContainer8.SplitterDistance = 266;
             this.splitContainer8.TabIndex = 25;
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.PCTextBox);
+            this.groupBox2.Location = new System.Drawing.Point(17, 168);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(109, 53);
+            this.groupBox2.TabIndex = 25;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "PC";
+            // 
+            // PCTextBox
+            // 
+            this.PCTextBox.Location = new System.Drawing.Point(6, 19);
+            this.PCTextBox.Name = "PCTextBox";
+            this.PCTextBox.Size = new System.Drawing.Size(87, 20);
+            this.PCTextBox.TabIndex = 22;
+            this.PCTextBox.Text = "0";
             // 
             // groupBox1
             // 
@@ -385,7 +417,7 @@ namespace C_SharpGBEmu
             // 
             // HLTextBox
             // 
-            this.HLTextBox.Location = new System.Drawing.Point(161, 34);
+            this.HLTextBox.Location = new System.Drawing.Point(146, 34);
             this.HLTextBox.Name = "HLTextBox";
             this.HLTextBox.Size = new System.Drawing.Size(40, 20);
             this.HLTextBox.TabIndex = 3;
@@ -393,7 +425,7 @@ namespace C_SharpGBEmu
             // 
             // AFTextBox
             // 
-            this.AFTextBox.Location = new System.Drawing.Point(23, 34);
+            this.AFTextBox.Location = new System.Drawing.Point(8, 34);
             this.AFTextBox.Name = "AFTextBox";
             this.AFTextBox.Size = new System.Drawing.Size(40, 20);
             this.AFTextBox.TabIndex = 0;
@@ -402,7 +434,7 @@ namespace C_SharpGBEmu
             // 
             // BCTextBox
             // 
-            this.BCTextBox.Location = new System.Drawing.Point(69, 34);
+            this.BCTextBox.Location = new System.Drawing.Point(54, 34);
             this.BCTextBox.Name = "BCTextBox";
             this.BCTextBox.Size = new System.Drawing.Size(40, 20);
             this.BCTextBox.TabIndex = 1;
@@ -410,7 +442,7 @@ namespace C_SharpGBEmu
             // 
             // DETextBox
             // 
-            this.DETextBox.Location = new System.Drawing.Point(115, 34);
+            this.DETextBox.Location = new System.Drawing.Point(100, 34);
             this.DETextBox.Name = "DETextBox";
             this.DETextBox.Size = new System.Drawing.Size(40, 20);
             this.DETextBox.TabIndex = 2;
@@ -419,7 +451,7 @@ namespace C_SharpGBEmu
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(20, 16);
+            this.label1.Location = new System.Drawing.Point(6, 16);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(20, 13);
             this.label1.TabIndex = 4;
@@ -428,7 +460,7 @@ namespace C_SharpGBEmu
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(66, 16);
+            this.label2.Location = new System.Drawing.Point(52, 16);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(21, 13);
             this.label2.TabIndex = 5;
@@ -437,7 +469,7 @@ namespace C_SharpGBEmu
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(112, 16);
+            this.label3.Location = new System.Drawing.Point(101, 16);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(22, 13);
             this.label3.TabIndex = 6;
@@ -446,7 +478,7 @@ namespace C_SharpGBEmu
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(160, 16);
+            this.label4.Location = new System.Drawing.Point(143, 16);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(21, 13);
             this.label4.TabIndex = 7;
@@ -460,7 +492,7 @@ namespace C_SharpGBEmu
             this.groupBox4.Controls.Add(this.ZcheckBox);
             this.groupBox4.Location = new System.Drawing.Point(17, 94);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(154, 58);
+            this.groupBox4.Size = new System.Drawing.Size(109, 58);
             this.groupBox4.TabIndex = 24;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Flags";
@@ -469,7 +501,7 @@ namespace C_SharpGBEmu
             // 
             this.CcheckBox.AutoSize = true;
             this.CcheckBox.CheckAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.CcheckBox.Location = new System.Drawing.Point(103, 19);
+            this.CcheckBox.Location = new System.Drawing.Point(79, 19);
             this.CcheckBox.Name = "CcheckBox";
             this.CcheckBox.Size = new System.Drawing.Size(18, 31);
             this.CcheckBox.TabIndex = 7;
@@ -480,7 +512,7 @@ namespace C_SharpGBEmu
             // 
             this.NcheckBox.AutoSize = true;
             this.NcheckBox.CheckAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.NcheckBox.Location = new System.Drawing.Point(53, 19);
+            this.NcheckBox.Location = new System.Drawing.Point(29, 19);
             this.NcheckBox.Name = "NcheckBox";
             this.NcheckBox.Size = new System.Drawing.Size(19, 31);
             this.NcheckBox.TabIndex = 3;
@@ -491,7 +523,7 @@ namespace C_SharpGBEmu
             // 
             this.HcheckBox.AutoSize = true;
             this.HcheckBox.CheckAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.HcheckBox.Location = new System.Drawing.Point(78, 19);
+            this.HcheckBox.Location = new System.Drawing.Point(54, 19);
             this.HcheckBox.Name = "HcheckBox";
             this.HcheckBox.Size = new System.Drawing.Size(19, 31);
             this.HcheckBox.TabIndex = 2;
@@ -502,29 +534,12 @@ namespace C_SharpGBEmu
             // 
             this.ZcheckBox.AutoSize = true;
             this.ZcheckBox.CheckAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.ZcheckBox.Location = new System.Drawing.Point(29, 19);
+            this.ZcheckBox.Location = new System.Drawing.Point(5, 19);
             this.ZcheckBox.Name = "ZcheckBox";
             this.ZcheckBox.Size = new System.Drawing.Size(18, 31);
             this.ZcheckBox.TabIndex = 0;
             this.ZcheckBox.Text = "Z";
             this.ZcheckBox.UseVisualStyleBackColor = true;
-            // 
-            // PCTextBox
-            // 
-            this.PCTextBox.Location = new System.Drawing.Point(38, 194);
-            this.PCTextBox.Name = "PCTextBox";
-            this.PCTextBox.Size = new System.Drawing.Size(40, 20);
-            this.PCTextBox.TabIndex = 22;
-            this.PCTextBox.Text = "0";
-            // 
-            // label12
-            // 
-            this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(35, 178);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(21, 13);
-            this.label12.TabIndex = 22;
-            this.label12.Text = "PC";
             // 
             // StackPanelScrollBar
             // 
@@ -584,6 +599,7 @@ namespace C_SharpGBEmu
             // 
             // AdressToolStrip
             // 
+            this.AdressToolStrip.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
             this.AdressToolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripLabel2,
             this.AdressTextBox});
@@ -671,6 +687,7 @@ namespace C_SharpGBEmu
             // MainToolStrip
             // 
             this.MainToolStrip.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.MainToolStrip.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
             this.MainToolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.ResetButton,
             this.PauseToolStripButton,
@@ -749,13 +766,114 @@ namespace C_SharpGBEmu
             this.ToggleBreakpointMenuItem.Text = "Toggle breakpoint";
             this.ToggleBreakpointMenuItem.Click += new System.EventHandler(this.ToggleBreakpointMenuItem_Click);
             // 
-            // DisassembleForm
+            // lcdGroupBox
+            // 
+            this.lcdGroupBox.Controls.Add(this.label9);
+            this.lcdGroupBox.Controls.Add(this.IFtextBox);
+            this.lcdGroupBox.Controls.Add(this.label8);
+            this.lcdGroupBox.Controls.Add(this.IEtextBox);
+            this.lcdGroupBox.Controls.Add(this.label7);
+            this.lcdGroupBox.Controls.Add(this.STATtextBox);
+            this.lcdGroupBox.Controls.Add(this.label6);
+            this.lcdGroupBox.Controls.Add(this.LYtextBox);
+            this.lcdGroupBox.Controls.Add(this.label5);
+            this.lcdGroupBox.Controls.Add(this.LCDCtextBox);
+            this.lcdGroupBox.Location = new System.Drawing.Point(132, 94);
+            this.lcdGroupBox.Name = "lcdGroupBox";
+            this.lcdGroupBox.Size = new System.Drawing.Size(131, 146);
+            this.lcdGroupBox.TabIndex = 25;
+            this.lcdGroupBox.TabStop = false;
+            this.lcdGroupBox.Text = "LCD Flags";
+            // 
+            // LCDCtextBox
+            // 
+            this.LCDCtextBox.Location = new System.Drawing.Point(8, 30);
+            this.LCDCtextBox.Name = "LCDCtextBox";
+            this.LCDCtextBox.Size = new System.Drawing.Size(40, 20);
+            this.LCDCtextBox.TabIndex = 0;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(8, 14);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(35, 13);
+            this.label5.TabIndex = 5;
+            this.label5.Text = "LCDC";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(63, 14);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(20, 13);
+            this.label6.TabIndex = 7;
+            this.label6.Text = "LY";
+            // 
+            // LYtextBox
+            // 
+            this.LYtextBox.Location = new System.Drawing.Point(63, 30);
+            this.LYtextBox.Name = "LYtextBox";
+            this.LYtextBox.Size = new System.Drawing.Size(40, 20);
+            this.LYtextBox.TabIndex = 6;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(8, 58);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(35, 13);
+            this.label7.TabIndex = 9;
+            this.label7.Text = "STAT";
+            // 
+            // STATtextBox
+            // 
+            this.STATtextBox.Location = new System.Drawing.Point(8, 74);
+            this.STATtextBox.Name = "STATtextBox";
+            this.STATtextBox.Size = new System.Drawing.Size(40, 20);
+            this.STATtextBox.TabIndex = 8;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(63, 58);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(17, 13);
+            this.label8.TabIndex = 11;
+            this.label8.Text = "IE";
+            // 
+            // IEtextBox
+            // 
+            this.IEtextBox.Location = new System.Drawing.Point(63, 74);
+            this.IEtextBox.Name = "IEtextBox";
+            this.IEtextBox.Size = new System.Drawing.Size(40, 20);
+            this.IEtextBox.TabIndex = 10;
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(8, 97);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(16, 13);
+            this.label9.TabIndex = 13;
+            this.label9.Text = "IF";
+            this.label9.Click += new System.EventHandler(this.label9_Click);
+            // 
+            // IFtextBox
+            // 
+            this.IFtextBox.Location = new System.Drawing.Point(8, 113);
+            this.IFtextBox.Name = "IFtextBox";
+            this.IFtextBox.Size = new System.Drawing.Size(40, 20);
+            this.IFtextBox.TabIndex = 12;
+            this.IFtextBox.TextChanged += new System.EventHandler(this.IFtextBox_TextChanged);
+            // 
+            // DebuggerForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(965, 650);
             this.Controls.Add(this.splitContainer7);
-            this.Name = "DisassembleForm";
+            this.Name = "DebuggerForm";
             this.Text = "Debugger";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.DisassembleForm_FormClosing);
             this.Load += new System.EventHandler(this.DisassembleForm_Load);
@@ -776,10 +894,11 @@ namespace C_SharpGBEmu
             this.splitContainer3.Panel2.ResumeLayout(false);
             this.splitContainer3.ResumeLayout(false);
             this.splitContainer8.Panel1.ResumeLayout(false);
-            this.splitContainer8.Panel1.PerformLayout();
             this.splitContainer8.Panel2.ResumeLayout(false);
             this.splitContainer8.Panel2.PerformLayout();
             this.splitContainer8.ResumeLayout(false);
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.groupBox4.ResumeLayout(false);
@@ -800,6 +919,8 @@ namespace C_SharpGBEmu
             this.MainToolStrip.ResumeLayout(false);
             this.MainToolStrip.PerformLayout();
             this.DisAsmPanelContextMenuStrip.ResumeLayout(false);
+            this.lcdGroupBox.ResumeLayout(false);
+            this.lcdGroupBox.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -831,7 +952,6 @@ namespace C_SharpGBEmu
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.Label label12;
         private System.Windows.Forms.TextBox SPTextBox;
         private System.Windows.Forms.TextBox PCTextBox;
         private System.Windows.Forms.SplitContainer splitContainer4;
@@ -866,5 +986,17 @@ namespace C_SharpGBEmu
         private BufferedPanel StackPanel1;
         private System.Windows.Forms.VScrollBar StackPanelScrollBar;
         private System.Windows.Forms.OpenFileDialog loadRomFileDialog1;
+        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.GroupBox lcdGroupBox;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.TextBox IEtextBox;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.TextBox STATtextBox;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.TextBox LYtextBox;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.TextBox LCDCtextBox;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.TextBox IFtextBox;
     }
 }
